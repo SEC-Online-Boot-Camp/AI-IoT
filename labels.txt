@@ -1,0 +1,5 @@
+0 Cat
+1 Lion
+2 Bird
+3 Car
+4 Human

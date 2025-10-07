@@ -1,0 +1,54 @@
+from datetime import datetime
+from picamera2.encoders import H264Encoder
+from picamera2 import Picamera2
+from gpiozero import LED, DistanceSensor
+from icecream import ic
+from time import sleep
+from warnings import filterwarnings
+
+# 警告の抑止とログの設定
+filterwarnings('ignore', module='gpiozero')
+ic.configureOutput(prefix=lambda: f'{datetime.now().isoformat(timespec="milliseconds")}  ')
+
+
+# 検知の閾値
+THRESHOLD = 30
+
+# GPIOの設定
+led = LED(4)
+sensor = DistanceSensor(echo=13, trigger=5)
+
+# カメラの設定
+camera = Picamera2()
+camera.start()
+
+# 検知状態（True：検知状態、False：非検知状態）
+status = False
+
+# 無限ループ
+while True:
+    # 距離の取得
+    d = sensor.distance * 100
+    ic(d)
+    if d < THRESHOLD:
+        if status == False:
+            # 検知状態
+            status = True
+            # LEDオン
+            led.on()
+            ic('ON')
+            # 静止画を撮影
+            now = datetime.now().strftime('%Y%m%d%H%M%S')
+            camera.capture_file(f'capture_{now}.jpg')
+        # 動画の撮影を開始する
+        camera.start_recording(H264Encoder(bitrate=10000000), f'video_{now}.h264')
+    else:
+        if status == True:
+            # 非検知状態
+            status = False
+            # 動画の撮影を停止
+            camera.stop_recording()
+            # LEDオフ
+            led.off()
+            ic('OFF')
+    sleep(1)
