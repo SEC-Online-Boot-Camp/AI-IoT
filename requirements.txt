@@ -1,2 +1,5 @@
 icecream
 gpiozero
+numpy
+opencv-python
+pillow
