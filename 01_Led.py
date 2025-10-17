@@ -1,12 +1,15 @@
 from datetime import datetime
-from gpiozero import LED
-from icecream import ic
 from time import sleep
 from warnings import filterwarnings
 
+from gpiozero import LED
+from icecream import ic
+
 # 警告の抑止とログの設定
-filterwarnings('ignore', module='gpiozero')
-ic.configureOutput(prefix=lambda: f'{datetime.now().isoformat(timespec="milliseconds")}  ')
+filterwarnings("ignore", module="gpiozero")
+ic.configureOutput(
+    prefix=lambda: f'{datetime.now().isoformat(timespec="milliseconds")}  '
+)
 
 # GPIOの設定
 led = LED(4)
@@ -15,9 +18,9 @@ led = LED(4)
 while True:
     # LEDオン
     led.on()
-    ic('ON')
+    ic("ON")
     sleep(0.5)
     # LEDオフ
     led.off()
-    ic('OFF')
+    ic("OFF")
     sleep(0.5)
