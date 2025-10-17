@@ -1,5 +1,6 @@
 icecream
 gpiozero
 numpy
+ollama
 opencv-python
 pillow
