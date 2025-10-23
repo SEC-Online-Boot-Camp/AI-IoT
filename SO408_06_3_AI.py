@@ -45,7 +45,7 @@ while True:
             label, score = classify_image(image_path)
             print(label, score)
             # 人間の場合のみ、検知オン処理
-            if label == "人間" and score > 80:
+            if "Human" in label:
                 # 検知状態
                 status = True
                 # LEDオン
