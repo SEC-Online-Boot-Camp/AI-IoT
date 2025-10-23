@@ -2,11 +2,12 @@ from datetime import datetime
 from time import sleep
 from warnings import filterwarnings
 
-from _05_TeachableMachine import classify_image
 from gpiozero import LED, DistanceSensor
 from icecream import ic
 from picamera2 import Picamera2
 from picamera2.encoders import H264Encoder
+
+from SO408_05_TeachableMachine import classify_image
 
 # 警告の抑止とログの設定
 filterwarnings("ignore", module="gpiozero")
